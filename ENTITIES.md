@@ -74,5 +74,3 @@ erDiagram
 - **NOTIFICATION:** Delivers messages and alerts to users about events, proposals, and other actions.
 
 ---
-
-> For further details on API usage and business logic, refer to the documentation files

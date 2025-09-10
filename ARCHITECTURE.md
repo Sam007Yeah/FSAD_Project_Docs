@@ -93,5 +93,3 @@ flowchart LR
 - **Scalability:** Modular design supports future feature expansion.
 - **Security:** JWT-based authentication and role management.
 - **Collaboration:** Real-time sync and notifications for seamless teamwork.
-
-> For setup instructions, contribution guidelines, and API documentation, refer to the respective files in this
