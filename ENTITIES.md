@@ -1,105 +1,78 @@
 # 📊 Entity Relationship Diagram
 
-The following diagram and entity definitions describe the core data model for the Collaborative Personal Scheduler. This enhanced version improves clarity, adds missing relationships, and uses consistent naming and comments.
+The following diagram and entity definitions describe the core data model for the Collaborative Personal Scheduler.
 
 ---
 
 ```mermaid
 erDiagram
     USER ||--o{ EVENT : "creates"
-    USER ||--o{ EVENTPARTICIPANT : "participates in"
-    EVENT ||--o{ EVENTPARTICIPANT : "has participants"
+    USER ||--o{ EVENTPARTICIPANT : "joins"
+    EVENT ||--o{ EVENTPARTICIPANT : "has"
     EVENT ||--o{ PROPOSAL : "can have"
-    PROPOSAL ||--o{ PROPOSALRESPONSE : "collects responses"
     USER ||--o{ PROPOSAL : "proposes"
-    USER ||--o{ PROPOSALRESPONSE : "responds"
     USER ||--o{ NOTIFICATION : "receives"
-    USER ||--o{ EMAILLOG : "sent to"
-    USER }|..|{ ROLE : "assigned"
-    EVENT ||--o{ RECURRINGRULE : "follows"
+    USER ||--o{ ROLE : "has"
 
     USER {
-      bigint id PK "Primary key"
-      varchar username "Unique username"
-      varchar email "User email address"
-      varchar password "Hashed password"
-      timestamp created_at "Account creation time"
+      bigint id PK
+      varchar username
+      varchar email
+      varchar password
     }
 
     ROLE {
-      bigint id PK "Primary key"
-      varchar name "Role name (user/admin)"
+      bigint id PK
+      varchar name
     }
 
     EVENT {
-      bigint id PK "Primary key"
-      varchar title "Event title"
-      text description "Event description"
-      timestamp start_time "Start time"
-      timestamp end_time "End time"
-      varchar category "Category (work/personal/study)"
-      bigint created_by FK "Created by USER"
+      bigint id PK
+      varchar title
+      text description
+      timestamp start_time
+      timestamp end_time
+      varchar category
+      bigint created_by FK
+      boolean recurring
     }
 
     EVENTPARTICIPANT {
-      bigint id PK "Primary key"
-      bigint event_id FK "Linked EVENT"
-      bigint user_id FK "Linked USER"
-      varchar status "INVITED, ACCEPTED, DECLINED"
-    }
-
-    RECURRINGRULE {
-      bigint id PK "Primary key"
-      bigint event_id FK "Linked EVENT"
-      varchar frequency "DAILY, WEEKLY, MONTHLY"
-      int interval "Repeat interval"
-      date until_date "Repeat until date"
+      bigint id PK
+      bigint event_id FK
+      bigint user_id FK
+      varchar status
     }
 
     PROPOSAL {
-      bigint id PK "Primary key"
-      bigint event_id FK "Linked EVENT"
-      bigint proposer_id FK "Proposed by USER"
-      timestamp proposed_time "Suggested time slot"
-    }
-
-    PROPOSALRESPONSE {
-      bigint id PK "Primary key"
-      bigint proposal_id FK "Linked PROPOSAL"
-      bigint user_id FK "Responding USER"
-      varchar response "ACCEPT, REJECT"
+      bigint id PK
+      bigint event_id FK
+      bigint proposer_id FK
+      timestamp proposed_time
+      varchar status
     }
 
     NOTIFICATION {
-      bigint id PK "Primary key"
-      bigint user_id FK "Recipient USER"
-      varchar message "Notification message"
-      timestamp created_at "Notification time"
-      boolean read "Read status"
+      bigint id PK
+      bigint user_id FK
+      varchar message
+      timestamp created_at
+      boolean read
     }
 
-    EMAILLOG {
-      bigint id PK "Primary key"
-      bigint user_id FK "Recipient USER"
-      varchar subject "Email subject"
-      timestamp sent_at "Sent time"
-    }
 ```
 
 ---
 
 ## 📝 Entity Highlights
 
-- **USER:** Core user profile, linked to events, proposals, notifications, and roles.
-- **ROLE:** Supports role-based access (user/admin).
-- **EVENT:** Calendar event with category, creator, and recurrence.
-- **EVENTPARTICIPANT:** Tracks user participation and status for events.
-- **RECURRINGRULE:** Defines event repetition patterns.
-- **PROPOSAL:** Suggests alternative time slots for events.
-- **PROPOSALRESPONSE:** Collects user responses to proposals.
-- **NOTIFICATION:** In-app alerts for users.
-- **EMAILLOG:** Tracks sent emails for auditing and troubleshooting.
+- **USER:** Stores user credentials and profile information. Can create events, propose meet-ups, receive notifications, and have roles.
+- **ROLE:** Defines user roles (e.g., user, admin) for access control.
+- **EVENT:** Represents a calendar event with details, category, creator, and recurrence flag.
+- **EVENTPARTICIPANT:** Links users to events, tracking their participation status (invited, accepted, declined).
+- **PROPOSAL:** Allows users to propose alternative time slots for events, with status tracking.
+- **NOTIFICATION:** Delivers messages and alerts to users about events, proposals, and other actions.
 
 ---
 
-> For further details on API usage and business logic, refer to the documentation files in this repository.
+> For further details on API usage and business logic, refer to the documentation files
