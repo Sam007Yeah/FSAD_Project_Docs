@@ -7,40 +7,52 @@ The Collaborative Personal Scheduler is built on a robust, scalable architecture
 ## 🗂️ High-Level Overview
 
 ```mermaid
-flowchart TB
-    subgraph Frontend [Frontend: React.js]
-        R1["React.js SPA"]
-        R2["FullCalendar.js"]
-        R3["Axios (REST API calls)"]
-        R4["Socket.IO Client"]
-        R5["Redux/Zustand"]
-        R6["TailwindCSS / Material UI"]
+flowchart LR
+    %% Frontend Section
+    subgraph FE[Frontend: React.js]
+        FE1["🖥️ React.js SPA"]
+        FE2["📅 FullCalendar.js"]
+        FE3["🔗 Axios (REST API)"]
+        FE4["⚡ Socket.IO Client"]
+        FE5["🗂️ Redux/Zustand"]
+        FE6["🎨 TailwindCSS / Material UI"]
     end
 
-    subgraph Backend [Backend: Spring Boot]
-        B1["REST Controllers"]
-        B2["WebSocket Endpoints"]
-        B3["Service Layer"]
-        B4["Spring Security + JWT"]
-        B5["Spring Data JPA (Hibernate)"]
-        B6["Spring Mail"]
+    %% Backend Section
+    subgraph BE[Backend: Spring Boot]
+        BE1["🌐 REST Controllers"]
+        BE2["🔔 WebSocket Endpoints"]
+        BE3["🧠 Service Layer"]
+        BE4["🔒 Spring Security + JWT"]
+        BE5["🗄️ Spring Data JPA (Hibernate)"]
+        BE6["✉️ Spring Mail"]
     end
 
-    subgraph Database [Database]
-        D1["PostgreSQL / MySQL"]
+    %% Database Section
+    subgraph DB[Database]
+        DB1["🗃️ PostgreSQL / MySQL"]
     end
 
-    subgraph External [External Services]
-        E1["SMTP Server (Gmail/SendGrid)"]
+    %% External Services Section
+    subgraph EX[External Services]
+        EX1["📤 SMTP Server (Gmail/SendGrid)"]
     end
 
-    R3 --> B1
-    R4 --> B2
-    B5 --> D1
-    B6 --> E1
-    B3 --> B5
-    B1 --> B3
-    B2 --> B3
+    %% Data Flow
+    FE3 --> BE1
+    FE4 --> BE2
+    BE1 --> BE3
+    BE2 --> BE3
+    BE3 --> BE5
+    BE5 --> DB1
+    BE6 --> EX1
+    BE4 -. Security Validation .-> BE1
+    BE4 -. Security Validation .-> BE2
+
+    %% UI Connections
+    FE1 --> FE2
+    FE1 --> FE5
+    FE1 --> FE6
 ```
 
 ---
