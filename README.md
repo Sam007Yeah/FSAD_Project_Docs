@@ -45,7 +45,7 @@ The **Collaborative Personal Scheduler** empowers users to efficiently manage th
 - View shared events
 - Propose and respond to meet-up time slots
 
-### 4. Advanced Features
+### 4. Additional Scope
 
 - **Email Notifications:**
 
